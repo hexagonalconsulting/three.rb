@@ -1,19 +1,8 @@
 require 'bundler'
 Bundler.require
 
-opal = Opal::Server.new { |s|
-  s.append_path 'app'
-  s.append_path 'assets'
-
-  s.main = 'main'
+run Opal::Server.new { |server|
+  server.main = 'main.rb'
+  server.append_path 'app'
+  server.index_path = 'index.html.erb'
 }
-
-map '/assets' do
-  run opal.sprockets
-end
-
-get '/' do
-  send_file 'index.html'
-end
-
-run Sinatra::Application
